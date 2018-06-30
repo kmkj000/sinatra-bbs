@@ -1,7 +1,14 @@
 div 
-  = @content
   p == "author:" + strong(@author)
   p
     | こうやって「|」パイプを使えば
     | slimでは多行になっていても
     | htmlでは一行になる
+
+div
+  h1 BBS
+  ul
+    - @comments.each do |comment|
+      li data-id="= comment.id"
+        = comment.body
+    

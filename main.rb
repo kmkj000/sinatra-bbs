@@ -2,7 +2,15 @@ require "sinatra"
 require 'sinatra/reloader'
 require 'slim'
 require 'active_record'
-require './models/comments.rb'
+#require './models/comments.rb'
+
+ActiveRecord::Base.establish_connection(
+    "adapter" => "sqlite3",
+    "database" => "./db/bbs.db"
+)
+
+class Comment < ActiveRecord::Base
+end
 
 before do
   @author = "putimaru"
@@ -14,9 +22,9 @@ helpers do
   end
 end
 
-get "/" do 
-  @title = "main"
-  @content = "main contnt" 
+get "/" do
+	# dbからid降順で全て取得
+	@comments = Comment.order("id desc").all
   slim :index
 end
 
