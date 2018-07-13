@@ -2,15 +2,8 @@ require "sinatra"
 require 'sinatra/reloader'
 require 'slim'
 require 'active_record'
-#require './models/comments.rb'
-
-ActiveRecord::Base.establish_connection(
-    "adapter" => "sqlite3",
-    "database" => "./db/bbs.db"
-)
-
-class Comment < ActiveRecord::Base
-end
+require 'json'
+require './models/bbs.rb'
 
 before do
   @author = "putimaru"
@@ -28,9 +21,25 @@ get "/" do
   slim :index
 end
 
-get "/about" do 
+post "/new" do
+  # 投稿を作成
+  Comment.create({
+    :body => params[:body]
+  })
+  redirect '/'
+end
+
+post'/delete' do
+  Comment.find(params[:id]).destroy
+end
+
+get "/about" do
 	@title = "about"
   @content = "about contnt"
   @email = 'mail@k.com'
   slim :about
+end
+
+after do
+  ActiveRecord::Base.connection.close
 end

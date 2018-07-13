@@ -1,4 +1,4 @@
-div 
+div
   p == "author:" + strong(@author)
   p
     | こうやって「|」パイプを使えば
@@ -9,6 +9,24 @@ div
   h1 BBS
   ul
     - @comments.each do |comment|
-      li data-id="= comment.id"
+      li data-id=comment.id
         = comment.body
-    
+        i style="color:#f00; padding-left:2px;" id="commentDelete" class="fas fa-times-circle"
+
+  h2 AddNewPost
+  form method="post" action="/new"
+    input type="text" name="body" id="comment-body"
+    input type="submit" value="投稿"
+
+javascript:
+  document.getElementById('commentDelete').onclick = function(){
+    var elem = this.parentNode;
+    console.dir(elem);
+    if (confirm('are you sure to delete?')){
+      $.post('/delete',{
+        id: elem.dataset.id
+      },function(){
+        $(elem).fadeOut(800);
+      });
+    }
+  };
