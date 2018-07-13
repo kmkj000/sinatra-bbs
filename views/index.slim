@@ -11,7 +11,7 @@ div
     - @comments.each do |comment|
       li data-id=comment.id
         = comment.body
-        i style="color:#f00; padding-left:2px;" id="commentDelete" class="fas fa-times-circle"
+        i style="color:#f00; padding-left:2px;" class="fas fa-times-circle" onclick="commentDelete(this)"
 
   h2 AddNewPost
   form method="post" action="/new"
@@ -19,14 +19,13 @@ div
     input type="submit" value="投稿"
 
 javascript:
-  document.getElementById('commentDelete').onclick = function(){
-    var elem = this.parentNode;
-    console.dir(elem);
+  function commentDelete(elem){
+    var parent = elem.parentNode;
     if (confirm('are you sure to delete?')){
       $.post('/delete',{
-        id: elem.dataset.id
+        id: parent.dataset.id
       },function(){
-        $(elem).fadeOut(800);
+        $(parent).fadeOut(800);
       });
     }
   };
