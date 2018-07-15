@@ -18,23 +18,24 @@ module MyBbs
         %|<strong>#{text}</strong>|
       end
     end
+
     # routing
     get "/" do
     	# dbからid降順で全て取得
-    	@comments = Comment.order("id desc").all
+    	@posts = Post.order("id desc").all
       slim :index
     end
 
     post "/new" do
       # 投稿を作成
-      Comment.create({
+      Post.create({
         :body => params[:body]
       })
       redirect '/'
     end
 
     post'/delete' do
-      Comment.find(params[:id]).destroy
+      Post.find(params[:id]).destroy
     end
 
     get "/about" do

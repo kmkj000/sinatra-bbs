@@ -8,18 +8,18 @@ div
 div
   h1 BBS
   ul
-    - @comments.each do |comment|
-      li data-id=comment.id
-        = comment.body
-        i style="color:#f00; padding-left:2px;" class="fas fa-times-circle" onclick="commentDelete(this)"
+    - @posts.each do |post|
+      li data-id=post.id
+        = post.body
+        i style="color:#f00; padding-left:2px;" class="fas fa-times-circle" onclick="postDelete(this)"
 
   h2 AddNewPost
   form method="post" action="/new"
-    input type="text" name="body" id="comment-body"
+    input type="text" name="body" id="post-body"
     input type="submit" value="投稿"
 
 javascript:
-  function commentDelete(elem){
+  function postDelete(elem){
     var parent = elem.parentNode;
     if (confirm('are you sure to delete?')){
       $.post('/delete',{

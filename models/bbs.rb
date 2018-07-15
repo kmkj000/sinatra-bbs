@@ -3,5 +3,5 @@ ActiveRecord::Base.establish_connection(
     "database" => "db/bbs.db"
 )
 
-class Comment < ActiveRecord::Base
+class Post < ActiveRecord::Base
 end

@@ -1,3 +1,4 @@
 require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
-require './models/comments.rb'
+
+require './models/bbs.rb'
